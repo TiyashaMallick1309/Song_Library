@@ -3,7 +3,11 @@
 }
 
 .song-table{
-    margin:2%;
+    margin:2%; 
+}
+
+.mat-elevation-z8{
+    border: 0.01rem solid black;
 }
 
 .forms{
@@ -17,3 +21,4 @@ h1{
 .footer{
     justify-content: space-evenly;
 }
+

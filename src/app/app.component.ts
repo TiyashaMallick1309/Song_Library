@@ -28,7 +28,8 @@ export class AppComponent implements AfterViewInit {
   // MatPaginator and MatTable view child elements
   @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator) {
     this.dataSource.paginator = paginator;
-    }
+    this.dataSource.paginator.pageSize = 10; // or any other page size you prefer
+  }
 
   @ViewChild(MatTable) table!: MatTable<Songs>;
 
@@ -74,4 +75,10 @@ export class AppComponent implements AfterViewInit {
         }
       }
 
+      getFormattedDuration(durationInSeconds: number): string {
+        const mins = Math.floor(durationInSeconds / 60);
+        const secs = Math.floor(durationInSeconds % 60);
+        return `${mins}:${secs < 10 ? `0${secs}`: secs}`;
+      }
+      
 }
