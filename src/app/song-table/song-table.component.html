@@ -1,0 +1,52 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? toggleAllRows() : null" [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+  
+    <!-- Song Name Column -->
+    <ng-container matColumnDef="songName">
+      <th mat-header-cell *matHeaderCellDef> Song Name </th>
+      <td mat-cell *matCellDef="let song"> {{song.songName}} </td>
+    </ng-container>
+  
+    <!-- Artist Name Column -->
+    <ng-container matColumnDef="artistName">
+      <th mat-header-cell *matHeaderCellDef> Artist Name </th>
+      <td mat-cell *matCellDef="let song"> {{song.artistName}} </td>
+    </ng-container>
+  
+    <!-- Number of Streams Column -->
+    <ng-container matColumnDef="numberOfStreams">
+      <th mat-header-cell *matHeaderCellDef> Number of Streams </th>
+      <td mat-cell *matCellDef="let song"> {{song.numberOfStreams}} </td>
+    </ng-container>
+  
+    <!-- Release Year Column -->
+    <ng-container matColumnDef="releaseYear">
+      <th mat-header-cell *matHeaderCellDef> Release Year </th>
+      <td mat-cell *matCellDef="let song"> {{song.releaseYear}} </td>
+    </ng-container>
+  
+    <!-- Duration Column -->
+    <ng-container matColumnDef="durationInSeconds">
+      <th mat-header-cell *matHeaderCellDef> Duration</th>
+      <td mat-cell *matCellDef="let song"> {{song.durationInSeconds}} </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+    </tr>
+  </table>
+  
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of songs"></mat-paginator>
