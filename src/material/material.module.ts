@@ -12,7 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatTableModule } from '@angular/material/table';
-import {MatSort, MatSortModule} from '@angular/material/sort';
+import {MatSortModule} from '@angular/material/sort';
+import {NgIf} from '@angular/common';
 
 @NgModule({
   declarations: [],
