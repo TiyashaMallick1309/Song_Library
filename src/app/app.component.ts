@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, Input } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
@@ -12,14 +12,12 @@ import { SongService } from './song.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit {
-  SONG_DATA: any;
+  SONG_DATA: Songs[] = [];
 
   constructor(private songService: SongService) {  }
   ngOnInit(): void {
     this.SONG_DATA = this.songService.getSongsData();
-
-    // this.updatePaginatorLength();
-
+    this.dataSource.data = this.SONG_DATA;
   }
 
   displayedColumns: string[] = ['select', 'songName', 'artistName', 'numberOfStreams', 'releaseYear', 'durationInSeconds'];
