@@ -5,3 +5,15 @@
 .song-table{
     margin:2%;
 }
+
+.forms{
+    justify-content: space-evenly;
+}
+
+h1{
+    margin:1%;
+}
+
+.footer{
+    justify-content: space-evenly;
+}
