@@ -4,15 +4,11 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Songs } from 'src/shared/models.service';
 import { SONG_DATA } from 'src/shared/models.service';
-import { MatTableModule } from '@angular/material/table';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-song-table',
   templateUrl: './song-table.component.html',
   styleUrls: ['./song-table.component.css'],
-  standalone: true,
-  imports: [MatTableModule,MatCheckboxModule,MatPaginatorModule],
 })
 
 export class SongTableComponent{
