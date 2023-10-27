@@ -61,13 +61,13 @@
       </tr>
     </table>
     
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of songs"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons aria-label="Select page of songs"></mat-paginator>
   </div>
 
 
   <div class="footer d-flex">
-    <button a mat-raised-button color="primary" href="" target="_blank" >Add Song</button>
-    <button a mat-raised-button color="warn" href="" target="_blank">Delete Song</button>
+    <button mat-raised-button color="primary" target="_blank" (click)="openAddSongDialog()">Add Song</button>
+    <button mat-raised-button color="warn">Delete Song</button>
     </div>
-    
 </div>
+<router-outlet></router-outlet>

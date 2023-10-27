@@ -1,1 +1,48 @@
-<p>song-add works!</p>
+<h2 mat-dialog-title>Add Song</h2>
+<form [formGroup]="songForm" (ngSubmit)="onSubmit()" class="form-horizontal">
+  <mat-dialog-content>
+    <div class="row">
+      <div class="col-md-4">
+        <mat-form-field class="fields">
+          <input matInput placeholder="Song Title" formControlName="songName">
+          <mat-error *ngIf="songForm.controls['songName'].hasError('required')">Title is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-4">
+        <mat-form-field class="fields">
+          <input matInput placeholder="Artist Name" formControlName="artistName">
+          <mat-error *ngIf="songForm.controls['artistName'].hasError('required')">Artist is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-4">
+        <mat-form-field class="fields">
+          <input matInput placeholder="No. of streams" formControlName="numberOfStreams" type="number">
+          <mat-error *ngIf="songForm.controls['numberOfStreams'].hasError('required')">Stream number is required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field class="fields">
+          <input matInput placeholder="Release Year" formControlName="releaseYear" type="number">
+          <mat-error *ngIf="songForm.controls['releaseYear'].hasError('required')">Year is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field class="fields">
+          <input matInput placeholder="Duration in seconds" formControlName="durationInSeconds" type="number">
+          <mat-error *ngIf="songForm.controls['durationInSeconds'].hasError('required')">Length is required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="button">
+    <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="songForm.invalid">Add</button>
+  </mat-dialog-actions>
+</form>

@@ -5,6 +5,8 @@ import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Songs } from 'src/shared/models/Song';
 import { SongService } from './song.service';
+import { MatDialog } from '@angular/material/dialog';
+import { SongAddComponent } from './song-add/song-add.component';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +16,7 @@ import { SongService } from './song.service';
 export class AppComponent implements AfterViewInit {
   SONG_DATA: Songs[] = [];
 
-  constructor(private songService: SongService) {  }
+  constructor(private songService: SongService, private dialog: MatDialog) {  }
   ngOnInit(): void {
     this.SONG_DATA = this.songService.getSongsData();
     this.dataSource.data = this.SONG_DATA;
@@ -23,8 +25,7 @@ export class AppComponent implements AfterViewInit {
   displayedColumns: string[] = ['select', 'songName', 'artistName', 'numberOfStreams', 'releaseYear', 'durationInSeconds'];
   dataSource = new MatTableDataSource<Songs>();
   selection = new SelectionModel<Songs>(true, []);
-  title: any;
-
+  
   // MatPaginator and MatTable view child elements
   @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator) {
     this.dataSource.paginator = paginator;
@@ -75,10 +76,24 @@ export class AppComponent implements AfterViewInit {
         }
       }
 
-      getFormattedDuration(durationInSeconds: number): string {
-        const mins = Math.floor(durationInSeconds / 60);
-        const secs = Math.floor(durationInSeconds % 60);
-        return `${mins}:${secs < 10 ? `0${secs}`: secs}`;
+  getFormattedDuration(durationInSeconds: number): string {
+    const mins = Math.floor(durationInSeconds / 60);
+    const secs = Math.floor(durationInSeconds % 60);
+    return `${mins}:${secs < 10 ? `0${secs}`: secs}`;
+  }
+
+  // Method to open the Add Song dialog
+  openAddSongDialog(): void {
+    const dialogRef = this.dialog.open(SongAddComponent, {
+      width: '500px',
+      height: '500px'
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if(result && result.song) {
+        this.SONG_DATA.push(result.song);
+        this.dataSource.data = this.SONG_DATA;
       }
-      
+    });
+  }
 }
