@@ -16,6 +16,7 @@ export class SongAddComponent implements OnInit {
     releaseYear: new FormControl('', [Validators.required]),
     durationInSeconds: new FormControl('', [Validators.required])
   });
+  dialog: any;
 
   constructor(
     private fb: FormBuilder,
@@ -54,4 +55,5 @@ export class SongAddComponent implements OnInit {
   private generateSongId(): string {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   }
+
 }
