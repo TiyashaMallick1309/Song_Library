@@ -3,6 +3,7 @@
   <div class="header">
     <h1>Song Collection</h1>
     <div class="forms d-flex">
+      <!-- Two input fields for searching songs by name or artist -->
       <mat-form-field>
         <mat-label>Search by song</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Type song name" #input>
@@ -15,16 +16,19 @@
   </div>
 
   <div class="song-table">
+    <!-- A table to display the song data, with sorting and pagination features -->
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
       <!-- Checkbox Column -->
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
+                <!-- A checkbox to select or deselect all rows -->
           <mat-checkbox (change)="$event ? toggleAllRows() : null" [checked]="selection.hasValue() && isAllSelected()"
             [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
           </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
+          <!-- A checkbox to select or deselect a single row -->
           <mat-checkbox [checked]="selection.isSelected(row)" [disabled]="selection.selected.length >= 5 && !selection.isSelected(row)" (click)="$event.stopPropagation(); toggleSelection(row)"
             [aria-label]="checkboxLabel(row)">
           </mat-checkbox>
@@ -61,18 +65,23 @@
         <td mat-cell *matCellDef="let song"> {{ getFormattedDuration(song.durationInSeconds) }} </td>
       </ng-container>
 
+      <!-- A row for the table header -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <!-- A row for each song data -->
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
       </tr>
     </table>
 
+    <!-- A paginator to navigate through the pages of the table -->
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons
       aria-label="Select page of songs">
     </mat-paginator>
   </div>
 
   <div class="footer d-flex">
+    <!-- A button to open a dialog for adding a new song -->
     <button mat-raised-button color="primary" target="_blank" (click)="openAddSongDialog()">Add Song</button>
+    <!-- A button to open a dialog for deleting a selected song -->
     <button mat-raised-button color="warn" [disabled]="selection.selected.length === 0" [mat-dialog-close]="true" (click)="openDeleteSongDialog()">Delete Song</button>
   </div>
 

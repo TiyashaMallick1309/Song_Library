@@ -1,8 +1,10 @@
 <h2 mat-dialog-title>Add Song</h2>
+<!-- A form element to collect the song data from the user -->
 <form [formGroup]="songForm" (ngSubmit)="onSubmit()" class="form-horizontal">
   <mat-dialog-content>
     <div class="row">
       <div class="col-md-4" class="fields">
+        <!-- A form field for the song title, with a validation error message -->
         <mat-form-field >
           <input matInput placeholder="Song Title" formControlName="songName">
           <mat-error *ngIf="songForm.controls['songName'].hasError('required')">Title is required</mat-error>
@@ -10,6 +12,7 @@
       </div>
 
       <div class="col-md-4" class="fields">
+        <!-- A form field for the artist name, with a validation error message -->
         <mat-form-field >
           <input matInput placeholder="Artist Name" formControlName="artistName">
           <mat-error *ngIf="songForm.controls['artistName'].hasError('required')">Artist is required</mat-error>
@@ -17,6 +20,7 @@
       </div>
 
       <div class="col-md-4" class="fields">
+        <!-- A form field for the number of streams, with a validation error message -->
         <mat-form-field >
           <input matInput placeholder="No. of streams" formControlName="numberOfStreams" type="number">
           <mat-error *ngIf="songForm.controls['numberOfStreams'].hasError('required')">Stream number is required</mat-error>
@@ -26,6 +30,7 @@
 
     <div class="row">
       <div class="col-md-6" class="fields">
+        <!-- A form field for the release year, with a validation error message -->
         <mat-form-field >
           <input matInput placeholder="Release Year" formControlName="releaseYear" type="number">
           <mat-error *ngIf="songForm.controls['releaseYear'].hasError('required')">Year is required</mat-error>
@@ -33,6 +38,7 @@
       </div>
 
       <div class="col-md-6" class="fields">
+        <!-- A form field for the duration in seconds, with a validation error message -->
         <mat-form-field >
           <input matInput placeholder="Duration in seconds" formControlName="durationInSeconds" type="number">
           <mat-error *ngIf="songForm.controls['durationInSeconds'].hasError('required')">Length is required</mat-error>
@@ -42,7 +48,9 @@
   </mat-dialog-content>
 
   <mat-dialog-actions class="button">
+    <!-- A button to cancel the dialog -->
     <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+    <!-- A button to submit the form, disabled if the form is invalid -->
     <button mat-raised-button color="primary" [disabled]="songForm.invalid">Add</button>
   </mat-dialog-actions>
 </form>

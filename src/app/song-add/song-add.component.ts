@@ -8,7 +8,10 @@ import { Songs } from 'src/shared/models/Song';
   templateUrl: './song-add.component.html',
   styleUrls: ['./song-add.component.css']
 })
+
+// A component class for the song add dialog
 export class SongAddComponent implements OnInit {
+  // A form group object to store the song data from the user input
   songForm: FormGroup = new FormGroup({
     songName: new FormControl('', [Validators.required]),
     artistName: new FormControl('', [Validators.required]),
@@ -18,11 +21,13 @@ export class SongAddComponent implements OnInit {
   });
   dialog: any;
 
+  // A constructor that injects the form builder and the dialog reference services
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<SongAddComponent>
   ) { }
 
+  // A lifecycle hook that runs after the component is initialized
   ngOnInit(): void {
     this.songForm = this.fb.group({
       songName: ['', Validators.required],
@@ -33,10 +38,13 @@ export class SongAddComponent implements OnInit {
     });
   }
 
+  // A method that submits the form data and closes the dialog with the song object
   onSubmit(): void {
+    // Check if the form is invalid and return if true
     if (this.songForm.invalid) {
       return;
     }
+    // Create a song object from the form values
     const song: Songs = {
       id: this.generateSongId(),
       songName: this.songForm.value.songName,
@@ -45,13 +53,16 @@ export class SongAddComponent implements OnInit {
       releaseYear: this.songForm.value.releaseYear,
       durationInSeconds: this.songForm.value.durationInSeconds
     };
+    // Close the dialog and pass the song object as the result
     this.dialogRef.close({ song: song });
   }
 
+  // A method that cancels the dialog without any result
   onCancel(): void {
     this.dialogRef.close();
   }
 
+  // A private method that generates a random song id
   private generateSongId(): string {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   }
