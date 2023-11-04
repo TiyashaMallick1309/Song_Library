@@ -1,10 +1,10 @@
-import { Component, ViewChild, AfterViewInit, Input } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource, MatTable } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Songs } from 'src/shared/models/Song';
-import { SongService } from './song.service';
+import { SongService } from '../shared/services/song.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SongAddComponent } from './song-add/song-add.component';
 import { SongDeleteComponent } from './song-delete/song-delete.component';
@@ -33,9 +33,6 @@ export class AppComponent implements AfterViewInit {
     this.dataSource.paginator.pageSize = 10; // or any other page size you prefer
   }
 
-  @ViewChild(MatTable) table!: MatTable<Songs>;
-
-  // MatSort view child element
   @ViewChild(MatSort)
   sort: MatSort = new MatSort;
 
@@ -51,7 +48,6 @@ export class AppComponent implements AfterViewInit {
     return numSelected === numRows;
   }
 
-  // Selects all rows if they are not all selected; otherwise clear selection.
   toggleAllRows(): void {
     if (this.isAllSelected()) {
       this.selection.clear();
@@ -61,7 +57,6 @@ export class AppComponent implements AfterViewInit {
     this.selection.select(...this.dataSource.data);
   }
 
-  //The label for the checkbox on the passed row
   checkboxLabel(row?: Songs): string {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
@@ -70,12 +65,18 @@ export class AppComponent implements AfterViewInit {
   }
 
   applyFilter(event: Event): void {
-        const filterValue = (event.target as HTMLInputElement).value;
-        this.dataSource.filter = filterValue.trim().toLowerCase();
-        if (this.dataSource.paginator) {
-          this.dataSource.paginator.firstPage();
-        }
-      }
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    const inputPlaceholder = (event.target as HTMLInputElement).placeholder.toLowerCase();
+    if (inputPlaceholder === 'type song name') {
+      this.dataSource.filterPredicate = (data: Songs, filter: string) => data.songName.toLowerCase().includes(filter);
+    } else if (inputPlaceholder === 'type artist name') {
+      this.dataSource.filterPredicate = (data: Songs, filter: string) => data.artistName.toLowerCase().includes(filter);
+    }
+    this.dataSource.filter = filterValue;
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 
   getFormattedDuration(durationInSeconds: number): string {
     const mins = Math.floor(durationInSeconds / 60);
@@ -83,11 +84,18 @@ export class AppComponent implements AfterViewInit {
     return `${mins}:${secs < 10 ? `0${secs}`: secs}`;
   }
 
-  // Method to open the Add Song dialog
+  toggleSelection(row: Songs): void {
+    if (this.selection.selected.length < 5 || this.selection.isSelected(row)) {
+      this.selection.toggle(row);
+    } else {
+      alert('You can select only up to 5 songs.');
+    }
+  }
+
   openAddSongDialog(): void {
     const dialogRef = this.dialog.open(SongAddComponent, {
       width: '800px',
-      height: '500px'
+      height: '400px'
     });
   
     dialogRef.afterClosed().subscribe(result => {

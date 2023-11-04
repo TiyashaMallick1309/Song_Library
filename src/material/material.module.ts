@@ -13,9 +13,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatTableModule } from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
+import { AppRoutingModule } from 'src/app/app-routing.module';
+import { SongDeleteComponent } from 'src/app/song-delete/song-delete.component';
+import { SongAddComponent } from 'src/app/song-add/song-add.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    SongDeleteComponent, 
+    SongAddComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -30,7 +36,9 @@ import {MatSortModule} from '@angular/material/sort';
     MatIconModule, 
     CommonModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    AppRoutingModule,
+    BrowserModule
   ],
   exports: [
     FormsModule,
@@ -44,7 +52,9 @@ import {MatSortModule} from '@angular/material/sort';
     MatTooltipModule,
     MatIconModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    AppRoutingModule,
+    BrowserModule
   ]
 })
 export class MaterialModule { }

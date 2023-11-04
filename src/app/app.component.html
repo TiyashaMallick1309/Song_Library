@@ -14,7 +14,6 @@
     </div>
   </div>
 
-
   <div class="song-table">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
@@ -26,8 +25,8 @@
           </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-            [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+          <mat-checkbox [checked]="selection.isSelected(row)" [disabled]="selection.selected.length >= 5 && !selection.isSelected(row)" (click)="$event.stopPropagation(); toggleSelection(row)"
+            [aria-label]="checkboxLabel(row)">
           </mat-checkbox>
         </td>
       </ng-container>
@@ -72,10 +71,9 @@
     </mat-paginator>
   </div>
 
-
   <div class="footer d-flex">
     <button mat-raised-button color="primary" target="_blank" (click)="openAddSongDialog()">Add Song</button>
-    <button mat-raised-button color="warn" [disabled]="selection.selected.length === 0" (click)="openDeleteSongDialog()">Delete Song</button>
+    <button mat-raised-button color="warn" [disabled]="selection.selected.length === 0" [mat-dialog-close]="true" (click)="openDeleteSongDialog()">Delete Song</button>
   </div>
+
 </div>
-<!-- <router-outlet></router-outlet> -->
