@@ -7,6 +7,7 @@ import { Songs } from 'src/shared/models/Song';
 import { SongService } from './song.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SongAddComponent } from './song-add/song-add.component';
+import { SongDeleteComponent } from './song-delete/song-delete.component';
 
 @Component({
   selector: 'app-root',
@@ -85,7 +86,7 @@ export class AppComponent implements AfterViewInit {
   // Method to open the Add Song dialog
   openAddSongDialog(): void {
     const dialogRef = this.dialog.open(SongAddComponent, {
-      width: '500px',
+      width: '800px',
       height: '500px'
     });
   
@@ -93,6 +94,29 @@ export class AppComponent implements AfterViewInit {
       if(result && result.song) {
         this.SONG_DATA.push(result.song);
         this.dataSource.data = this.SONG_DATA;
+      }
+    });
+  }
+
+  openDeleteSongDialog(): void {
+    const dialogRef = this.dialog.open(SongDeleteComponent, {
+      width: '500px',
+      height: '500px',
+      data: { songs: this.selection.selected }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const deletedSongsCount = this.selection.selected.length;
+        this.selection.selected.forEach(song => {
+          const index = this.SONG_DATA.findIndex(s => s.id === song.id);
+          if (index !== -1) {
+            this.SONG_DATA.splice(index, 1);
+          }
+        });
+        this.selection.clear();
+        this.dataSource.data = this.SONG_DATA;
+        alert(`${deletedSongsCount} song(s) have been deleted successfully.`);
       }
     });
   }

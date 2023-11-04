@@ -75,7 +75,7 @@
 
   <div class="footer d-flex">
     <button mat-raised-button color="primary" target="_blank" (click)="openAddSongDialog()">Add Song</button>
-    <button mat-raised-button color="warn">Delete Song</button>
+    <button mat-raised-button color="warn" [disabled]="selection.selected.length === 0" (click)="openDeleteSongDialog()">Delete Song</button>
   </div>
 </div>
 <!-- <router-outlet></router-outlet> -->

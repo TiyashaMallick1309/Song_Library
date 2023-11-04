@@ -1,1 +1,14 @@
-<p>song-delete works!</p>
+<h2 mat-dialog-title>Delete Song(s)</h2>
+<mat-dialog-content>
+  <p>Are you sure you want to delete the selected songs?</p>
+  <p *ngIf="selectedSongs.length > 0">
+      You've selected the following songs for deletion:
+      <ul>
+        <li *ngFor="let song of selectedSongs">{{ song.songName }} - {{song.artistName}}</li>
+      </ul>
+  <p *ngIf="selectedSongs.length === 0">Please select at least one song to delete.</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="" *ngIf="selectedSongs.length > 0">Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial color="warn" *ngIf="selectedSongs.length > 0">Delete</button>
+</mat-dialog-actions>
